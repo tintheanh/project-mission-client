@@ -14,8 +14,9 @@ export default class App extends Component {
       connected: false,
     };
   }
+  
   componentDidMount() {
-    const ws = new WebSocket('ws://192.168.1.5:4000');
+    const ws = new WebSocket('ws://10.15.154.156:4000');
     const socket = this.socket = new Socket(ws);
     socket.on('connect', this.onConnect.bind(this));
     socket.on('disconnect', this.onDisconnect.bind(this));
