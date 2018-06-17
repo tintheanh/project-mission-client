@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import RequestSection from './components/requests/RequestSection';
+
+// import RequestSection from './components/requests/RequestSection';
 import Socket from './socket';
+import { NavigationBar } from './components/NavigationBar';
+import { RequestSection } from './components/Request';
 
 export default class App extends Component {
   constructor(props) {
@@ -46,15 +49,10 @@ export default class App extends Component {
     return (
       <Router>
         <div className="app">
-          <nav>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/request">Request</Link></li>
-            </ul>
-          </nav>
+          <NavigationBar />
           <RequestSection
             {...this.state}
-            addTrequest={this.addTrequest.bind(this)}
+            addTrequest={this.addTrequest.bind(this)} 
           />
         </div>
       </Router>

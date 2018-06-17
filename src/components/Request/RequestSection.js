@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import RequestForm from './RequestForm';
 import RequestList from './RequestList';
 
-class RequestSection extends Component {
+export class RequestSection extends Component {
   render() {
     return (
       <div className="support panel panel-primary">
@@ -20,4 +20,3 @@ class RequestSection extends Component {
   }
 }
 
-export default RequestSection;
