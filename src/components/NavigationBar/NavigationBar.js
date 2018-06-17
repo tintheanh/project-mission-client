@@ -8,13 +8,20 @@ export class NavigationBar extends Component {
             <Navbar style={{marginBottom:'3vh'}}>
                 <Nav style={{flex: 1, flexDirection:'row'}}>
                     <NavItem className='col-md-5 offset-md-1 text-center' eventKey={1} href="#">
-                        <Link to='/'> Home </Link>
+                        <Link to='/'><h3>Home</h3></Link>
                     </NavItem>
                     <NavItem className='col-md-5 offset-md-1 text-center' eventKey={2} href="#">
-                        <Link to='/requests'> Requests </Link>
+                        <Link to='/requests'><h3>Requests</h3></Link>
                     </NavItem>
                 </Nav>
             </Navbar>
         );
     }
+}
+
+const styles = {
+    linkHoverStyle: {
+        borderBottom: 'solid 1px black'
+    },
+    
 }

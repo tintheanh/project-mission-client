@@ -23,6 +23,7 @@ class RequestForm extends Component {
       <section className='text-center'>
         <h1>Welcome to MC Tutoring Center</h1>
         <h5>Please enter your name and subject that you need help with</h5>
+        <br />
         <form className='container' onSubmit={this.onSubmit.bind(this)}>
           <div className="form-group">
             <input
