@@ -39,7 +39,7 @@ export class NavigationBar extends Component {
 
     render() {
         return(
-            <Navbar style={{marginBottom:'10vh'}}>
+            <Navbar style={{marginBottom:'7vh'}}>
                 <Nav style={{flex: 1, flexDirection:'row'}}>
                     <NavItem 
                         style={this.state.linkStyles[0]}
