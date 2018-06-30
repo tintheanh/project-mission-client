@@ -2,7 +2,9 @@ import React from 'react';
 
 const styles = {
   containerStyle: {
-    margin: '13vh 12vw 0 12vw'
+    margin: '0 12vw 14vh 12vw',
+    position: 'relative',
+    top: '13vh'
   },
   headerTextStyle: {
     fontWeight: 'bold',

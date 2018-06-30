@@ -118,13 +118,13 @@ export default class RequestForm extends Component {
     return (
       <Container>
         <h1 style={styles.headerTextStyle}>
-          Please enter your name and subject name
+          Please enter your name and subject
         </h1>
         <form style={styles.formStyle}>
           <div className="form-group">
             <Row>
               <Col lg="4">
-                <h1 style={{ fontSize: '3vw', color: '#fff' }}>
+                <h1 style={{ fontSize: '3vw', color: '#fff', textAlign: 'center' }}>
                   Name
                 </h1>
               </Col>
@@ -139,7 +139,7 @@ export default class RequestForm extends Component {
             </Row>
             <Row>
               <Col lg="12" style={{ textAlign: 'center' }}>
-                <button type="button" style={styles.courseSelectBtn} onClick={this.toggle}>Choose a subject</button>
+                <button type="button" style={styles.subjectSelectBtn} onClick={this.toggle}>Choose a subject</button>
               </Col>
             </Row>
             <Modal isOpen={this.state.modal} toggle={this.toggle} backdrop="static" style={{ maxWidth: '73vw' }}>
@@ -206,7 +206,7 @@ const styles = {
   },
 
   formStyle: {
-    margin: '4vh 18vw 0 18vw'
+    margin: '4vh 14vw 0 14vw'
   },
 
   inputStyle: {
@@ -217,9 +217,9 @@ const styles = {
     background: 'none'
   },
 
-  courseSelectBtn: {
-    padding: '14px 0 14px 0',
-    width: '20vw',
+  subjectSelectBtn: {
+    padding: '14px 4.3vw 14px 4.3vw',
+    width: 'auto',
     background: '#fff',
     fontSize: '2vw',
     color: '#919191',
@@ -230,8 +230,7 @@ const styles = {
   },
 
   submitBtn: {
-    padding: '7px 0 7px 0',
-    width: '10vw',
+    padding: '10px 5vw 10px 5vw',
     background: '#fff',
     fontSize: '1vw',
     color: '#919191',
@@ -242,8 +241,7 @@ const styles = {
   },
 
   cancelBtn: {
-    padding: '7px 0 7px 0',
-    width: '10vw',
+    padding: '10px 5vw 10px 5vw',
     background: '#DADADA',
     fontSize: '1vw',
     color: 'rgba(0, 0, 0, 0.5)',

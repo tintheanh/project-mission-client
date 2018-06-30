@@ -62,8 +62,7 @@ export default class RequestList extends PureComponent {
           columns={[
             {
               Header: 'Name',
-              accessor: 'name',
-              maxWidth: 124
+              accessor: 'name'
             },
             {
               Header: 'Subject',

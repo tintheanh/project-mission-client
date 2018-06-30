@@ -7,7 +7,7 @@ const RequestList = props => (
   <div style={styles.container}>
     <Row>
       <Col lg="4">
-        <h1 style={styles.headerTextStyle}>Mathematics</h1>
+        <h1 style={styles.headerTextStyle} className="request-title">Mathematics</h1>
         <RequestTable
           group="MATH"
           trequests={props.trequests}
@@ -15,7 +15,7 @@ const RequestList = props => (
         />
       </Col>
       <Col lg="4">
-        <h1 style={styles.headerTextStyle}>STEM/CTE</h1>
+        <h1 style={styles.headerTextStyle} className="request-title">STEM/CTE</h1>
         <RequestTable
           group="STEM/CTE"
           trequests={props.trequests}
@@ -23,7 +23,7 @@ const RequestList = props => (
         />
       </Col>
       <Col lg="4">
-        <h1 style={styles.headerTextStyle}>Language Arts</h1>
+        <h1 style={styles.headerTextStyle} className="request-title">Language Arts</h1>
         <RequestTable
           group="LA"
           trequests={props.trequests}
@@ -42,7 +42,7 @@ const styles = {
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#fff',
-    marginTop: '2vh',
+    marginTop: '8.6vh',
     marginBottom: '1vh'
   },
 

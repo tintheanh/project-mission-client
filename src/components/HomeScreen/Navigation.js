@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 
 const Navigation = () => (
-  <Navbar light expand="md" style={styles.navStyle}>
+  <Navbar light expand style={styles.navStyle}>
     <Nav className="ml-auto" navbar>
       <NavItem>
         <NavLink tag="span"><Link to="/">Home</Link></NavLink>

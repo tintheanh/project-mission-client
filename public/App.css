@@ -47,11 +47,16 @@ body {
   background: url("./images/bg.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: cover;
+  widows: 100%;
 }
 
 /* Custom nav bar */
 .navbar {
+  position: fixed !important;
+  left: 0;
+  width: 100%;
   padding: 0 !important;
+  z-index: 1000;
 }
 
 .navbar .navbar-nav .nav-item:hover {
@@ -99,8 +104,14 @@ button {
   outline: none !important;
 }
 
+/* Styling table */
+
 .ReactTable {
   border: none !important;
+}
+.ReactTable .rt-thead,
+.ReactTable .rt-tbody {
+  min-width: auto !important;
 }
 
 .ReactTable .rt-thead {
@@ -114,20 +125,28 @@ button {
   border-radius: 25px;
 }
 
-/* Erase header border right */
-.ReactTable .rt-thead .rt-tr .rt-th:nth-child(2) {
-  border-right: none;
-}
-
 .ReactTable .rt-th,
 .ReactTable .rt-td {
   overflow: visible !important;
 }
 
-/* Move 'Subject' to center */
+.ReactTable .rt-thead .rt-tr .rt-th:first-child {
+  width: auto !important;
+  max-width: 30% !important;
+}
+
+.ReactTable .rt-thead .rt-tr .rt-th:nth-child(2) {
+  width: auto !important;
+  max-width: 70% !important;
+  border-right: none;
+}
+
 .ReactTable .rt-thead .rt-tr .rt-th:nth-child(2) div {
-  text-align: left;
-  margin-left: 80%;
+  text-align: center;
+}
+
+.ReactTable .rt-thead .rt-tr .rt-th:nth-child(3) {
+  display: none;
 }
 
 .ReactTable .rt-tbody {
@@ -135,11 +154,11 @@ button {
 }
 
 /* Erase stupid 1px row gap */
-.ReactTable.-striped .rt-tr-group {
+.ReactTable .rt-tr-group {
   border-bottom: none !important;
 }
 
-.ReactTable.-striped .rt-tr.-odd {
+.ReactTable .rt-tr.-odd {
   background-color: #f3f3f3 !important;
 }
 
@@ -147,19 +166,19 @@ button {
   background-color: rgb(233, 233, 233) !important;
 }
 
-/* Styling text 1st col */
 .ReactTable .rt-table .rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(1) {
+  max-width: 30%;
   text-align: center;
 }
 
-/* Styling text 2nd col */
 .ReactTable .rt-table .rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(2) {
+  max-width: 40%;
   border-right: none;
   margin-left: 12px;
 }
 
-/* Styling text 3rd col */
 .ReactTable .rt-table .rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(3) {
+  max-width: 30%;
   font-weight: lighter;
   font-style: italic;
   text-align: right;
@@ -171,4 +190,195 @@ button {
 .ReactTable .rt-noData {
   font-size: 1.5vw;
   text-align: center;
+}
+
+/* End styling table */
+
+@media only screen and (max-width: 1220px) {
+  .modal-dialog {
+    max-width: 82vw !important;
+  }
+
+  .modal-dialog .modal-body > .row {
+    padding: 0 14px !important;
+  }
+
+  .modal-dialog .modal-body h1 {
+    font-size: 2.6vw !important;
+  }
+
+  .modal-dialog .modal-body .col-lg-12 {
+    height: 64vh !important;
+  }
+
+  .modal-dialog .modal-body p {
+    font-size: 1.5vw !important;
+  }
+
+  .modal-dialog .modal-footer button {
+    padding: 2vh 8vw 2vh 8vw !important;
+    /* width: 22vw !important; */
+    font-size: 2.6vw !important;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  header > h1 {
+    font-size: 6.5vw !important;
+  }
+
+  .container > h1 {
+    font-size: 3.6vw !important;
+  }
+
+  .form-group h1 {
+    font-size: 3.6vw !important;
+  }
+
+  input[type="text"] {
+    font-size: 3.6vw !important;
+  }
+
+  .form-group button {
+    font-size: 3.6vw !important;
+    margin-top: 8.8vh !important;
+  }
+
+  .modal-dialog {
+    max-width: 92vw !important;
+  }
+
+  .modal-dialog .modal-body h1 {
+    font-size: 3vw !important;
+  }
+
+  .modal-dialog .modal-body p {
+    font-size: 1.6vw !important;
+  }
+
+  .ReactTable .rt-tbody {
+    font-size: 1.7vw;
+  }
+
+  .ReactTable .rt-thead {
+    font-size: 2.2vw;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .modal-dialog {
+    max-height: 82vh !important;
+  }
+
+  .modal-dialog .modal-body {
+    max-height: 82vh !important;
+    overflow-y: scroll !important;
+  }
+
+  .modal-dialog .modal-body h1 {
+    font-size: 4.2vw !important;
+    font-weight: bold;
+  }
+
+  .modal-dialog .modal-body .col-lg-12 {
+    height: auto !important;
+    padding-bottom: 46px;
+  }
+
+  .modal-dialog .modal-body .col-lg-12 .row {
+    margin-top: 36px !important;
+  }
+
+  .modal-dialog .modal-body .col-lg-12 .row div {
+    border-radius: 40px !important;
+    margin: auto !important;
+  }
+
+  .modal-dialog .modal-body .col-lg-12 .row div p {
+    font-size: 2.8vw !important;
+    padding: 14px 0 14px 0 !important;
+  }
+
+  .ReactTable .rt-tbody {
+    font-size: 2.7vw;
+  }
+
+  .ReactTable .rt-thead {
+    font-size: 3.2vw;
+  }
+
+  .request-title {
+    font-size: 5.2vw !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container form {
+    margin: 3vh 2vw !important;
+  }
+
+  input[type="text"] {
+    font-size: 5.6vw !important;
+    text-align: center;
+  }
+
+  .form-group button {
+    font-size: 4.6vw !important;
+    margin-top: 5.8vh !important;
+  }
+}
+
+@media only screen and (max-width: 654px) {
+  header {
+    margin: 0 7vw 17vh 7vw !important;
+  }
+  header > h1 {
+    font-size: 10.5vw !important;
+  }
+
+  .container > h1 {
+    font-size: 5vw !important;
+    margin: 4vh 0 !important;
+  }
+
+  .form-group h1 {
+    font-size: 5.6vw !important;
+    margin-bottom: 4vh !important;
+  }
+
+  input[type="text"] {
+    font-size: 5.6vw !important;
+  }
+
+  .form-group button {
+    /* width: auto !important; */
+    font-size: 5.6vw !important;
+    margin-top: 5.8vh !important;
+  }
+
+  .modal-dialog .modal-body h1 {
+    font-size: 5.2vw !important;
+  }
+
+  .modal-dialog .modal-footer button {
+    font-size: 4.2vw !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .modal-dialog {
+    margin: 1.75rem auto !important;
+  }
+
+  .ReactTable .rt-tbody {
+    font-size: 3.7vw;
+  }
+
+  .ReactTable .rt-thead {
+    font-size: 4.2vw;
+  }
+
+  .request-title {
+    font-size: 6.2vw !important;
+  }
 }
