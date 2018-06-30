@@ -4,6 +4,7 @@ import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
 import Socket from './socket';
+import subjects from './subjectData';
 
 export default class App extends Component {
   constructor(props) {
@@ -26,14 +27,14 @@ export default class App extends Component {
     socket.on('disconnect', this.onDisconnect.bind(this));
 
     // fetch subjects
-    const { subjects } = this.state;
-    fetch('/get-subjects').then(response => response.json())
-      .then((data) => {
-        data.forEach((element) => {
-          subjects.push(element);
-        });
-      }).then(() => this.setState({ subjects }))
-      .catch(err => console.log(err));
+    // const { subjects } = this.state;
+    // fetch('https://api.jsonbin.io/b/5b37321defaed72daeed8cfd').then(response => response.json())
+    //   .then((data) => {
+    //     data.forEach((element) => {
+    //       subjects.push(element);
+    //     });
+    //   }).then(() => this.setState({ subjects }))
+    //   .catch(err => console.log(err));
   }
 
   onConnect() {
@@ -90,7 +91,7 @@ export default class App extends Component {
               render={() => (
                 <Home
                   addTrequest={this.addTrequest.bind(this)}
-                  subjects={this.state.subjects}
+                  subjects={subjects}
                 />
               )}
             />
