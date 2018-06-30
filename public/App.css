@@ -1,63 +1,174 @@
-/* .app{
-  display:flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  height: 100vh;
-  font-size: 16px;
-}
-.nav{
-  flex-basis: 20%;
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url("./fonts/TCM/TCM.eot"); /* IE9 Compat Modes */
+  src: url("./fonts/TCM/TCM.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("./fonts/TCM/TCM.otf") format("opentype"),
+    /* Open Type Font */ url("./fonts/TCM/TCM.svg") format("svg"),
+    /* Legacy iOS */ url("./fonts/TCM/TCM.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url("./fonts/TCM/TCM.woff") format("woff"),
+    /* Modern Browsers */ url("./fonts/TCM/TCM.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
 }
 
-.messages-container{
-  flex-basis: 80%;
-  margin-bottom: 0;
-  height: 100vh;
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url("./fonts/TCB/TCB.eot"); /* IE9 Compat Modes */
+  src: url("./fonts/TCB/TCB.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("./fonts/TCB/TCB.otf") format("opentype"),
+    /* Open Type Font */ url("./fonts/TCB/TCB.svg") format("svg"),
+    /* Legacy iOS */ url("./fonts/TCB/TCB.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url("./fonts/TCB/TCB.woff") format("woff"),
+    /* Modern Browsers */ url("./fonts/TCB/TCB.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: bold;
+  font-style: normal;
 }
-.support, .users{
-  height: 50vh;
-  margin-bottom: 0;
-}
-.channels, .users, .messages{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.channels, .users{
-  height: 88%;
-}
-.messages{
-  height: 94%;
-}
-.channels > ul, .messages > ul, .users > ul{
-  flex: 1;
-  overflow-y: auto;
-}
-.message > .author{
-  flex-basis: 100%;
-}
-.message > .body{
-  flex-basis: 100%;
-}
-.active {
-  background-color: #E8E8E8;
-}
-.timestamp{
-  color: #808080;
+
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url("./fonts/TCLI/TwCenMTStd-LightItalic.eot"); /* IE9 Compat Modes */
+  src: url("./fonts/TCLI/TwCenMTStd-LightItalic.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("./fonts/TCLI/TwCenMTStd-LightItalic.otf")
+      format("opentype"),
+    /* Open Type Font */ url("./fonts/TCLI/TwCenMTStd-LightItalic.svg")
+      format("svg"),
+    /* Legacy iOS */ url("./fonts/TCLI/TwCenMTStd-LightItalic.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */ url("./fonts/TCLI/TwCenMTStd-LightItalic.woff")
+      format("woff"),
+    /* Modern Browsers */ url("./fonts/TCLI/TwCenMTStd-LightItalic.woff2")
+      format("woff2"); /* Modern Browsers */
+  font-weight: lighter;
   font-style: italic;
-  padding-left: 10px;
-  font-size: 13px;
 }
-.form-group{
-  margin-bottom: 0;
+
+body {
+  background: url("./images/bg.jpg") no-repeat center center fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-ul{
-  list-style-type:none;
-  padding: 0;
+
+/* Custom nav bar */
+.navbar {
+  padding: 0 !important;
 }
-li{
-  padding: 0 4px 0 4px;
-}
-a{
+
+.navbar .navbar-nav .nav-item:hover {
+  background-color: #000;
   cursor: pointer;
-} */
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+  padding: 16px 0 16px 0;
+}
+
+.navbar .navbar-nav .nav-item .nav-link a {
+  color: #fff;
+  font-size: 20px;
+  padding: 16px 0 16px 0;
+}
+
+.navbar .navbar-nav .nav-item:nth-child(1) .nav-link a {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.navbar .navbar-nav .nav-item:nth-child(2) .nav-link a {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.navbar .navbar-nav .nav-item .nav-link a:hover {
+  text-decoration: none;
+}
+/* End custom nav bar */
+
+/* Removing blue highlight when click on input field */
+input:focus {
+  outline: none !important;
+}
+
+input[type="text"] {
+  font-size: 3vw;
+  color: #fff;
+}
+
+/* Removing blue highlight when click on button */
+button {
+  outline: none !important;
+}
+
+.ReactTable {
+  border: none !important;
+}
+
+.ReactTable .rt-thead {
+  background-color: #7dc0b1;
+  color: #fff;
+  font-size: 1.7vw;
+  padding: 1.2vh 0 1.2vh 0;
+}
+
+.ReactTable .rt-table {
+  border-radius: 25px;
+}
+
+/* Erase header border right */
+.ReactTable .rt-thead .rt-tr .rt-th:nth-child(2) {
+  border-right: none;
+}
+
+.ReactTable .rt-th,
+.ReactTable .rt-td {
+  overflow: visible !important;
+}
+
+/* Move 'Subject' to center */
+.ReactTable .rt-thead .rt-tr .rt-th:nth-child(2) div {
+  text-align: left;
+  margin-left: 80%;
+}
+
+.ReactTable .rt-tbody {
+  font-size: 1.5vw;
+}
+
+/* Erase stupid 1px row gap */
+.ReactTable.-striped .rt-tr-group {
+  border-bottom: none !important;
+}
+
+.ReactTable.-striped .rt-tr.-odd {
+  background-color: #f3f3f3 !important;
+}
+
+.ReactTable.-striped .rt-tr.-even {
+  background-color: rgb(233, 233, 233) !important;
+}
+
+/* Styling text 1st col */
+.ReactTable .rt-table .rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(1) {
+  text-align: center;
+}
+
+/* Styling text 2nd col */
+.ReactTable .rt-table .rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(2) {
+  border-right: none;
+  margin-left: 12px;
+}
+
+/* Styling text 3rd col */
+.ReactTable .rt-table .rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(3) {
+  font-weight: lighter;
+  font-style: italic;
+  text-align: right;
+  color: #8a8a8a;
+  margin-right: 12px;
+}
+
+/* Styling 'no data' text */
+.ReactTable .rt-noData {
+  font-size: 1.5vw;
+  text-align: center;
+}

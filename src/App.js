@@ -1,38 +1,48 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-
-// import RequestSection from './components/requests/RequestSection';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './components/HomeScreen/Home';
+import Navigation from './components/HomeScreen/Navigation';
+import RequestSection from './components/RequestSection/RequestSection';
 import Socket from './socket';
-import { NavigationBar } from './components/NavigationBar';
-import { RequestSection } from './components/Request';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       trequests: [],
-      users: [],
-      messages: [],
-      activeRequest: {},
-      connected: false,
+      subjects: []
     };
   }
-  
+
   componentDidMount() {
-    const ws = new WebSocket('ws://10.15.154.156:4000');
+    const ws = new WebSocket('ws://localhost:4000');
     const socket = this.socket = new Socket(ws);
+
+    // Listening
     socket.on('connect', this.onConnect.bind(this));
-    socket.on('disconnect', this.onDisconnect.bind(this));
     socket.on('trequest add', this.onAddTrequest.bind(this));
+    socket.on('trequest edit', this.onCheckRequest.bind(this));
+    socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
+    socket.on('disconnect', this.onDisconnect.bind(this));
+
+    // fetch subjects
+    const { subjects } = this.state;
+    fetch('/get-subjects').then(response => response.json())
+      .then((data) => {
+        data.forEach((element) => {
+          subjects.push(element);
+        });
+      }).then(() => this.setState({ subjects }))
+      .catch(err => console.log(err));
   }
 
   onConnect() {
-    this.setState({ connected: true });
+    console.log('connected');
     this.socket.emit('trequest subscribe');
   }
 
   onDisconnect() {
-    this.setState({ connected: false });
+    console.log('disconnected');
   }
 
   onAddTrequest(trequest) {
@@ -41,22 +51,61 @@ export default class App extends Component {
     this.setState({ trequests });
   }
 
+  onRemoveCheckedTrequest() {
+    const { trequests } = this.state;
+    const uncheckedRequests = [];
+    trequests.forEach((e) => {
+      if (e.checked === false) uncheckedRequests.push(e);
+    });
+    this.setState({ trequests: uncheckedRequests });
+  }
+
+  onCheckRequest(req) {
+    const { trequests } = this.state;
+    for (let index = 0; index < trequests.length; index++) {
+      if (trequests[index].id === req.id) {
+        trequests[index] = Object.assign(req);
+      }
+    }
+    this.setState({ trequests });
+  }
+
   addTrequest(name) {
     this.socket.emit('trequest add', name);
+  }
+
+  removeCheckedTrequest(reqID) {
+    this.socket.emit('trequest remove', reqID);
   }
 
   render() {
     return (
       <Router>
-        <div className="app">
-          <NavigationBar />
-          <RequestSection
-            {...this.state}
-            addTrequest={this.addTrequest.bind(this)} 
-          />
+        <div>
+          <Navigation />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Home
+                  addTrequest={this.addTrequest.bind(this)}
+                  subjects={this.state.subjects}
+                />
+              )}
+            />
+            <Route
+              path="/request"
+              render={() => (
+                <RequestSection
+                  trequests={this.state.trequests}
+                  removeCheckedTrequest={this.removeCheckedTrequest.bind(this)}
+                />
+              )}
+            />
+          </Switch>
         </div>
       </Router>
-
     );
   }
 }

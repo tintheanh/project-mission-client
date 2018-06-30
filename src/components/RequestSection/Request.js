@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class Request extends Component {
-  onClick(e) {
-    e.preventDefault();
-    const { trequest } = this.props;
-  }
   render() {
     const { trequest } = this.props;
     return (
       <li>
-        {trequest.name}
+        {trequest.checked ? 'true' : 'false'}
+        {moment(trequest.date, 'MMMM Do YYYY, h:mm:ss a').valueOf()}
       </li>
     );
   }

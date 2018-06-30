@@ -4,12 +4,46 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
-    ]
+    ],
+    "strict": [2, "safe"],
+    "no-debugger": 2,
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "no-trailing-spaces": 2,
+    "max-len": ["error", { "code": 200 }],
+    "keyword-spacing": 2,
+    "space-before-function-paren": [2, "never"],
+    "spaced-comment": [2, "always"],
+    "vars-on-top": 2,
+    "no-undef": 2,
+    "no-undefined": 2,
+    "comma-dangle": [2, "never"],
+    "quotes": [2, "single"],
+    "semi": [2, "always"],
+    "guard-for-in": 2,
+    "no-eval": 2,
+    "no-with": 2,
+    "valid-typeof": 2,
+    "no-unused-vars": 2,
+    "no-continue": 1,
+    "no-extra-semi": 1,
+    "no-unreachable": 1,
+    "no-unused-expressions": 1,
+    "no-magic-numbers": 0,
+    "react/prefer-es6-class": 1,
+    "react/jsx-one-expression-per-line": 0,
+    "class-methods-use-this": 0,
+    "no-use-before-define": 0,
+    "no-console": 0,
+    "no-multi-assign": 0,
+    "no-plusplus": 0,
+    "react/jsx-no-bind": 0,
+    "react/destructuring-assignment": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react/no-array-index-key": 0,
+    "no-alert": 0
   },
   "env": {
     "browser": true,
