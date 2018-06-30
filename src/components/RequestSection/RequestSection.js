@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import RequestTable from './RequestTable';
 
 const RequestList = props => (
-  <div style={styles.container}>
+  <div className="request-header" style={styles.container}>
     <Row>
       <Col lg="4">
         <h1 style={styles.headerTextStyle} className="request-title">Mathematics</h1>

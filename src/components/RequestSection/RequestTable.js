@@ -52,7 +52,7 @@ export default class RequestList extends PureComponent {
     const { trequests, group } = this.props;
     const trequestsFinal = this.getRequests(trequests, group);
     return (
-      <div>
+      <div className="request-table">
         <ReactTable
           resizable={false}
           sortable={false}

@@ -374,6 +374,10 @@ button {
     max-height: 72vh !important;
   }
 
+  .request-table .ReactTable {
+    margin-bottom: 10vh;
+  }
+
   .ReactTable .rt-tbody {
     font-size: 3.7vw;
   }
@@ -384,5 +388,11 @@ button {
 
   .request-title {
     font-size: 6.2vw !important;
+    margin: 0 0 3.2vh 0!important;
+    /* margin-bottom: 3.2vh!important; */
+  }
+
+  .request-header .row .col-lg-4:first-child .request-title {
+    margin-top: 12vh!important; 
   }
 }
