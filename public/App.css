@@ -370,6 +370,10 @@ button {
     margin: 1.75rem auto !important;
   }
 
+  .modal-dialog .modal-body {
+    max-height: 72vh !important;
+  }
+
   .ReactTable .rt-tbody {
     font-size: 3.7vw;
   }
