@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const ws = new WebSocket('ws://9acaa4bd.ngrok.io');
+    const ws = new WebSocket('wss://6976003d.ngrok.io');
     const socket = this.socket = new Socket(ws);
 
     // Listening
