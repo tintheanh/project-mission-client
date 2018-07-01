@@ -43,6 +43,11 @@
   font-style: italic;
 }
 
+html, body {
+  max-width: 100%!important;
+  overflow-x: hidden!important;
+}
+
 body {
   background: url("./images/bg.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
