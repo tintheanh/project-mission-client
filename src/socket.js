@@ -38,6 +38,10 @@ class Socket {
 
   close() {
     this.ee.emit('disconnect');
+    console.log('Socket is closed. Reconnect will be attempted in 1 second.');
+    setTimeout(() => {
+      this.open();
+    }, 1000);
   }
 }
 

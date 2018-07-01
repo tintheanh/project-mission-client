@@ -10,13 +10,12 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trequests: [],
-      subjects: []
+      trequests: []
     };
   }
 
   componentDidMount() {
-    const ws = new WebSocket('wss://6976003d.ngrok.io');
+    const ws = new WebSocket('wss://mygoapi.ngrok.io');
     const socket = this.socket = new Socket(ws);
 
     // Listening
@@ -24,6 +23,7 @@ export default class App extends Component {
     socket.on('trequest add', this.onAddTrequest.bind(this));
     socket.on('trequest edit', this.onCheckRequest.bind(this));
     socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
+    // setTimeout(() => socket.on('connect', this.onConnect.bind(this)), 1000);
     // socket.on('disconnect', this.onDisconnect.bind(this));
 
     // fetch subjects
