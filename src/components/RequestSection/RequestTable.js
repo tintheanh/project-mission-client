@@ -24,7 +24,7 @@ export default class RequestList extends PureComponent {
     trequests.forEach((e) => {
       if (e.group === group) {
         if (e.checked === false) {
-          e.status = this.getWaitingTime(e.date);
+          e.status = this.getWaitingStatus(e.date);
         } else e.status = this.checkBy(e.byTutor);
         finalRequests.push(e);
       }
@@ -32,8 +32,13 @@ export default class RequestList extends PureComponent {
     return finalRequests;
   }
 
-
   getWaitingTime(timeRequest) {
+    const diff = Math.abs(new Date() - moment(timeRequest, 'MMMM Do YYYY, h:mm:ss a'));
+    return Math.floor((diff / 1000) / 60);
+  }
+
+
+  getWaitingStatus(timeRequest) {
     const diff = Math.abs(new Date() - moment(timeRequest, 'MMMM Do YYYY, h:mm:ss a'));
     const min = Math.floor((diff / 1000) / 60);
     if (min < 30) {

@@ -24,7 +24,7 @@ export default class App extends Component {
     socket.on('trequest add', this.onAddTrequest.bind(this));
     socket.on('trequest edit', this.onCheckRequest.bind(this));
     socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
-    socket.on('disconnect', this.onDisconnect.bind(this));
+    // socket.on('disconnect', this.onDisconnect.bind(this));
 
     // fetch subjects
     // const { subjects } = this.state;
