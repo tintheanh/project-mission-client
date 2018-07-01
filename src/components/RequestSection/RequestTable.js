@@ -16,7 +16,7 @@ export default class RequestList extends PureComponent {
         }
       });
       this.forceUpdate();
-    }, 120000); // Update each 5 min
+    }, 60000); // Update each 1 min
   }
 
   getRequests(trequests, group) {
