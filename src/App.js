@@ -111,15 +111,15 @@ export default class App extends Component {
   }
 
   // Using hardcodedSubjects when fetching fail
-  renderSubjects(subjects) {
-    if (this.state.subjects.length === 0) {
+  renderSubjects() {
+    const { subjects } = this.state;
+    if (subjects.length === 0) {
       return hardcodedsubjects.sort((a, b) => (a.name > b.name) - (a.name < b.name));
     }
     return subjects;
   }
 
   render() {
-    const { subjects } = this.state;
     return (
       <Router>
         <div>
@@ -131,7 +131,7 @@ export default class App extends Component {
               render={() => (
                 <Home
                   addTrequest={this.addTrequest.bind(this)}
-                  subjects={this.renderSubjects(subjects)}
+                  subjects={this.renderSubjects()}
                 />
               )}
             />
