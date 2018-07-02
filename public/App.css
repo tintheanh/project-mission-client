@@ -52,7 +52,7 @@ body {
   background: url("./images/bg.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: cover;
-  widows: 100%;
+  width: 100%;
 }
 
 /* Custom nav bar */

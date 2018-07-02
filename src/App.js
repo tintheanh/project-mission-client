@@ -6,6 +6,7 @@ import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
 import Socket from './socket';
+import hardcodedsubjects from './subjectData';
 
 export default class App extends Component {
   constructor(props) {
@@ -20,13 +21,13 @@ export default class App extends Component {
     let ws = new WebSocket('wss://mygoapi.ngrok.io');
     let socket = this.socket = new Socket(ws);
 
-    // Listening
+    // Connecting to WebSocket
     socket.on('connect', this.onConnect.bind(this));
     socket.on('trequest add', this.onAddTrequest.bind(this));
     socket.on('trequest edit', this.onCheckRequest.bind(this));
     socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
 
-    // Checking every 3s => reconnect
+    // Checking every 3s => reconnecting
     setInterval(() => {
       console.log(ws.readyState);
       if (ws.readyState === 3) {
@@ -41,7 +42,7 @@ export default class App extends Component {
 
     // Fetching subjects
     const { subjects } = this.state;
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Bypassing CORS
+    const proxyUrl = 'https://cryptic-reaches-48126.herokuapp.com/'; // Bypassing CORS
     const targetUrl = 'https://mygoapi.ngrok.io/get-subjects';
     fetch(proxyUrl + targetUrl).then(response => response.json())
       .then((data) => {
@@ -49,7 +50,8 @@ export default class App extends Component {
           subjects.push(element);
         });
         subjects.sort((a, b) => (a.name > b.name) - (a.name < b.name)); // Sorting by subject's name
-      }).then(() => this.setState({ subjects }))
+      }).then(() => console.log('Fetching done'))
+      .then(() => this.setState({ subjects }))
       .catch(err => console.log(err));
   }
 
@@ -66,20 +68,20 @@ export default class App extends Component {
     const { trequests } = this.state;
     if (!this.checkDuplicatedTrequest(trequests, trequest)) {
       trequests.push(trequest);
+      // Sorting by trequest's date
       trequests.sort((a, b) => moment(a.date, 'MMMM Do YYYY, h:mm:ss a').valueOf() - moment(b.date, 'MMMM Do YYYY, h:mm:ss a').valueOf());
       this.setState({ trequests });
     }
   }
 
+  // Filtering unchecked trequests
   onRemoveCheckedTrequest() {
     const { trequests } = this.state;
-    const uncheckedRequests = [];
-    trequests.forEach((e) => {
-      if (!e.checked) uncheckedRequests.push(e);
-    });
+    const uncheckedRequests = trequests.filter(e => !e.checked);
     this.setState({ trequests: uncheckedRequests });
   }
 
+  // When checking a trequest, reassign it to a checked trequest
   onCheckRequest(req) {
     const { trequests } = this.state;
     for (let i = 0; i < trequests.length; i++) {
@@ -90,6 +92,7 @@ export default class App extends Component {
     this.setState({ trequests });
   }
 
+  // Checking duplicated trequest b/c WS reconnecting causes duplicating trequest
   checkDuplicatedTrequest(trequests, trequest) {
     for (let i = 0; i < trequests.length; i++) {
       if (trequests[i].id === trequest.id) {
@@ -107,7 +110,16 @@ export default class App extends Component {
     this.socket.emit('trequest remove', reqID);
   }
 
+  // Using hardcodedSubjects when fetching fail
+  renderSubjects(subjects) {
+    if (this.state.subjects.length === 0) {
+      return hardcodedsubjects.sort((a, b) => (a.name > b.name) - (a.name < b.name));
+    }
+    return subjects;
+  }
+
   render() {
+    const { subjects } = this.state;
     return (
       <Router>
         <div>
@@ -119,7 +131,7 @@ export default class App extends Component {
               render={() => (
                 <Home
                   addTrequest={this.addTrequest.bind(this)}
-                  subjects={this.state.subjects}
+                  subjects={this.renderSubjects(subjects)}
                 />
               )}
             />

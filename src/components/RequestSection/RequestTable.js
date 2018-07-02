@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ReactTable from 'react-table';
 import FaCheck from 'react-icons/lib/fa/check';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import 'react-table/react-table.css';
 
-export default class RequestList extends Component {
+export default class RequestList extends PureComponent {
   componentDidMount() {
     const { trequests, removeCheckedTrequest } = this.props;
     setInterval(() => {
