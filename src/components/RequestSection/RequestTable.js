@@ -10,20 +10,20 @@ export default class RequestList extends Component {
     const { trequests, removeCheckedTrequest } = this.props;
     setInterval(() => {
       trequests.forEach((e) => {
-        if (e.checked === true) {
+        if (e.checked) {
           e.status = 'done';
           removeCheckedTrequest(e);
         }
       });
       this.forceUpdate();
-    }, 60000); // Update each 1 min
+    }, 60000); // Updating every 1 min
   }
 
   getRequests(trequests, group) {
     const finalRequests = [];
     trequests.forEach((e) => {
       if (e.group === group) {
-        if (e.checked === false) {
+        if (!e.checked) {
           e.status = this.getWaitingStatus(e.date);
         } else e.status = this.checkBy(e.byTutor);
         finalRequests.push(e);
@@ -31,12 +31,6 @@ export default class RequestList extends Component {
     });
     return finalRequests;
   }
-
-  getWaitingTime(timeRequest) {
-    const diff = Math.abs(new Date() - moment(timeRequest, 'MMMM Do YYYY, h:mm:ss a'));
-    return Math.floor((diff / 1000) / 60);
-  }
-
 
   getWaitingStatus(timeRequest) {
     const diff = Math.abs(new Date() - moment(timeRequest, 'MMMM Do YYYY, h:mm:ss a'));

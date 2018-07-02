@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import createBrowserHistory from 'history/createBrowserHistory';
 import WebSocket from 'reconnecting-websocket';
+import moment from 'moment';
 import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
 import Socket from './socket';
-// import subjects from './subjectData';
-
-// const history = createBrowserHistory();
 
 export default class App extends Component {
   constructor(props) {
@@ -20,13 +17,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    // const options = { connectionTimeout: 1000 };
     let ws = new WebSocket('wss://mygoapi.ngrok.io');
-    // console.log(ws.readyState);
-    // if (ws.readyState === ws.OPEN || ws.readyState === ws.CLOSING) {
-    //   console.log('open');
-    // }
-    // ws.timeoutInterval = 5400;
     let socket = this.socket = new Socket(ws);
 
     // Listening
@@ -34,6 +25,8 @@ export default class App extends Component {
     socket.on('trequest add', this.onAddTrequest.bind(this));
     socket.on('trequest edit', this.onCheckRequest.bind(this));
     socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
+
+    // Checking every 3s => reconnect
     setInterval(() => {
       console.log(ws.readyState);
       if (ws.readyState === 3) {
@@ -46,25 +39,22 @@ export default class App extends Component {
       }
     }, 3000);
 
-    // setTimeout(() => socket.on('connect', this.onConnect.bind(this)), 1000);
-    // socket.on('disconnect', this.onDisconnect.bind(this));
-
-    // fetch subjects
+    // Fetching subjects
     const { subjects } = this.state;
-
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Bypassing CORS
     const targetUrl = 'https://mygoapi.ngrok.io/get-subjects';
     fetch(proxyUrl + targetUrl).then(response => response.json())
       .then((data) => {
         data.forEach((element) => {
           subjects.push(element);
         });
-        subjects.sort(this.dynamicSort('name'));
+        subjects.sort((a, b) => (a.name > b.name) - (a.name < b.name)); // Sorting by subject's name
       }).then(() => this.setState({ subjects }))
       .catch(err => console.log(err));
   }
 
   onConnect() {
+    console.log('connected');
     this.socket.emit('trequest subscribe');
   }
 
@@ -76,8 +66,8 @@ export default class App extends Component {
     const { trequests } = this.state;
     if (!this.checkDuplicatedTrequest(trequests, trequest)) {
       trequests.push(trequest);
-      trequests.sort(this.dynamicSort('date'));
-      this.setState({ trequests }, () => console.log(this.state.trequests));
+      trequests.sort((a, b) => moment(a.date, 'MMMM Do YYYY, h:mm:ss a').valueOf() - moment(b.date, 'MMMM Do YYYY, h:mm:ss a').valueOf());
+      this.setState({ trequests });
     }
   }
 
@@ -85,21 +75,20 @@ export default class App extends Component {
     const { trequests } = this.state;
     const uncheckedRequests = [];
     trequests.forEach((e) => {
-      if (e.checked === false) uncheckedRequests.push(e);
+      if (!e.checked) uncheckedRequests.push(e);
     });
     this.setState({ trequests: uncheckedRequests });
   }
 
   onCheckRequest(req) {
     const { trequests } = this.state;
-    for (let index = 0; index < trequests.length; index++) {
-      if (trequests[index].id === req.id) {
-        trequests[index] = Object.assign(req);
+    for (let i = 0; i < trequests.length; i++) {
+      if (trequests[i].id === req.id) {
+        trequests[i] = Object.assign(req);
       }
     }
     this.setState({ trequests });
   }
-
 
   checkDuplicatedTrequest(trequests, trequest) {
     for (let i = 0; i < trequests.length; i++) {
@@ -108,18 +97,6 @@ export default class App extends Component {
       }
     }
     return false;
-  }
-
-  dynamicSort(property) {
-    let sortOrder = 1;
-    if (property[0] === '-') {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-    return function(a, b) {
-      const result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-      return result * sortOrder;
-    };
   }
 
   addTrequest(name) {
