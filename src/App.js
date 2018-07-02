@@ -1,44 +1,69 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import createBrowserHistory from 'history/createBrowserHistory';
+import WebSocket from 'reconnecting-websocket';
 import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
 import Socket from './socket';
-import subjects from './subjectData';
+// import subjects from './subjectData';
+
+// const history = createBrowserHistory();
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trequests: []
+      trequests: [],
+      subjects: []
     };
   }
 
   componentDidMount() {
-    const ws = new WebSocket('wss://mygoapi.ngrok.io');
-    const socket = this.socket = new Socket(ws);
+    // const options = { connectionTimeout: 1000 };
+    let ws = new WebSocket('wss://mygoapi.ngrok.io');
+    // console.log(ws.readyState);
+    // if (ws.readyState === ws.OPEN || ws.readyState === ws.CLOSING) {
+    //   console.log('open');
+    // }
+    // ws.timeoutInterval = 5400;
+    let socket = this.socket = new Socket(ws);
 
     // Listening
     socket.on('connect', this.onConnect.bind(this));
     socket.on('trequest add', this.onAddTrequest.bind(this));
     socket.on('trequest edit', this.onCheckRequest.bind(this));
     socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
+    setInterval(() => {
+      console.log(ws.readyState);
+      if (ws.readyState === 3) {
+        ws = new WebSocket('wss://mygoapi.ngrok.io');
+        socket = this.socket = new Socket(ws);
+        socket.on('connect', this.onConnect.bind(this));
+        socket.on('trequest add', this.onAddTrequest.bind(this));
+        socket.on('trequest edit', this.onCheckRequest.bind(this));
+        socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
+      }
+    }, 3000);
+
     // setTimeout(() => socket.on('connect', this.onConnect.bind(this)), 1000);
     // socket.on('disconnect', this.onDisconnect.bind(this));
 
     // fetch subjects
-    // const { subjects } = this.state;
-    // fetch('https://api.jsonbin.io/b/5b37321defaed72daeed8cfd').then(response => response.json())
-    //   .then((data) => {
-    //     data.forEach((element) => {
-    //       subjects.push(element);
-    //     });
-    //   }).then(() => this.setState({ subjects }))
-    //   .catch(err => console.log(err));
+    const { subjects } = this.state;
+
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const targetUrl = 'https://mygoapi.ngrok.io/get-subjects';
+    fetch(proxyUrl + targetUrl).then(response => response.json())
+      .then((data) => {
+        data.forEach((element) => {
+          subjects.push(element);
+        });
+      }).then(() => this.setState({ subjects }))
+      .catch(err => console.log(err));
   }
 
   onConnect() {
-    console.log('connected');
     this.socket.emit('trequest subscribe');
   }
 
@@ -48,8 +73,10 @@ export default class App extends Component {
 
   onAddTrequest(trequest) {
     const { trequests } = this.state;
-    trequests.push(trequest);
-    this.setState({ trequests });
+    if (!this.checkDuplicatedTrequest(trequests, trequest)) {
+      trequests.push(trequest);
+      this.setState({ trequests }, () => console.log(this.state.trequests));
+    }
   }
 
   onRemoveCheckedTrequest() {
@@ -69,6 +96,16 @@ export default class App extends Component {
       }
     }
     this.setState({ trequests });
+  }
+
+
+  checkDuplicatedTrequest(trequests, trequest) {
+    for (let i = 0; i < trequests.length; i++) {
+      if (trequests[i].id === trequest.id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   addTrequest(name) {
@@ -91,7 +128,7 @@ export default class App extends Component {
               render={() => (
                 <Home
                   addTrequest={this.addTrequest.bind(this)}
-                  subjects={subjects}
+                  subjects={this.state.subjects}
                 />
               )}
             />

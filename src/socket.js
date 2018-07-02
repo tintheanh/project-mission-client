@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 class Socket {
-  constructor(ws = new WebSocket(), ee = new EventEmitter()) {
+  constructor(ws, ee = new EventEmitter()) {
     this.ws = ws;
     this.ee = ee;
     ws.onmessage = this.message.bind(this);
@@ -38,10 +38,6 @@ class Socket {
 
   close() {
     this.ee.emit('disconnect');
-    console.log('Socket is closed. Reconnect will be attempted in 1 second.');
-    setTimeout(() => {
-      this.open();
-    }, 1000);
   }
 }
 
