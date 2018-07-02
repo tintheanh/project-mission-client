@@ -59,6 +59,7 @@ export default class App extends Component {
         data.forEach((element) => {
           subjects.push(element);
         });
+        subjects.sort(this.dynamicSort('name'));
       }).then(() => this.setState({ subjects }))
       .catch(err => console.log(err));
   }
@@ -75,6 +76,7 @@ export default class App extends Component {
     const { trequests } = this.state;
     if (!this.checkDuplicatedTrequest(trequests, trequest)) {
       trequests.push(trequest);
+      trequests.sort(this.dynamicSort('date'));
       this.setState({ trequests }, () => console.log(this.state.trequests));
     }
   }
@@ -106,6 +108,18 @@ export default class App extends Component {
       }
     }
     return false;
+  }
+
+  dynamicSort(property) {
+    let sortOrder = 1;
+    if (property[0] === '-') {
+      sortOrder = -1;
+      property = property.substr(1);
+    }
+    return function(a, b) {
+      const result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+      return result * sortOrder;
+    };
   }
 
   addTrequest(name) {
