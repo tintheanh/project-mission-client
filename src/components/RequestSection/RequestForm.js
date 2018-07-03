@@ -36,7 +36,7 @@ export default class RequestForm extends Component {
         group: this.state.ginput,
         date: moment().format('MMMM Do YYYY, h:mm:ss a')
       };
-      addTrequest(data);
+      addTrequest(data); // Sending data to the server
       this.ninputRef.value = '';
       alert('Your request has been submitted! Please wait for a few minutes!');
       this.toggle();

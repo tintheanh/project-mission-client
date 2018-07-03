@@ -40,7 +40,7 @@ export default class RequestList extends PureComponent {
       if (min % 5 === 0) return `${min} min ago`;
       return `${parseInt(min / 5, 10) * 5} min ago`; // If min not % 5, return the closest min % 5
     }
-    return '> 30 min ago';
+    return <p style={{ margin: '0', fontWeight: 'bold' }}> > 30 min ago</p>;
   }
 
   checkedBy(tutor) {
