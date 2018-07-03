@@ -25,7 +25,7 @@ export default class RequestList extends PureComponent {
       if (e.group === group) {
         if (!e.checked) {
           e.status = this.getWaitingStatus(e.date);
-        } else e.status = this.checkBy(e.byTutor);
+        } else e.status = this.checkedBy(e.byTutor);
         finalRequests.push(e);
       }
     });
@@ -38,12 +38,12 @@ export default class RequestList extends PureComponent {
     if (min < 30) {
       if (min < 5) return 'Just now';
       if (min % 5 === 0) return `${min} min ago`;
-      return `${parseInt(min / 5, 10) * 5} min ago`;
+      return `${parseInt(min / 5, 10) * 5} min ago`; // If min not % 5, return the closest min % 5
     }
     return '> 30 min ago';
   }
 
-  checkBy(tutor) {
+  checkedBy(tutor) {
     return <p style={{ margin: '0' }}><FaCheck /> by {tutor}</p>;
   }
 

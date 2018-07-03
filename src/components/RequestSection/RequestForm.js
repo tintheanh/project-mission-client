@@ -48,9 +48,9 @@ export default class RequestForm extends Component {
 
   returnSubjectGroup(subjects, group) {
     const subjectGroup = [];
-    subjects.forEach((element) => {
-      if (element.group === group) {
-        subjectGroup.push(element);
+    subjects.forEach((e) => {
+      if (e.group === group) {
+        subjectGroup.push(e);
       }
     });
     return subjectGroup;

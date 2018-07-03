@@ -29,8 +29,8 @@ export default class App extends Component {
 
     // Checking every 3s => reconnecting
     setInterval(() => {
-      console.log(ws.readyState);
       if (ws.readyState === 3) {
+        console.log('Connection is lost! Reconnecting...');
         ws = new WebSocket('wss://mygoapi.ngrok.io');
         socket = this.socket = new Socket(ws);
         socket.on('connect', this.onConnect.bind(this));
@@ -49,26 +49,26 @@ export default class App extends Component {
         data.forEach((element) => {
           subjects.push(element);
         });
-        subjects.sort((a, b) => (a.name > b.name) - (a.name < b.name)); // Sorting by subject's name
-      }).then(() => console.log('Fetching done'))
+        subjects.sort((a, b) => (a.name > b.name) - (a.name < b.name)); // Sorted by subject's name
+      }).then(() => console.log('Fetching succeeded'))
       .then(() => this.setState({ subjects }))
       .catch(err => console.log(err));
   }
 
   onConnect() {
-    console.log('connected');
+    console.log('Connected');
     this.socket.emit('trequest subscribe');
   }
 
   onDisconnect() {
-    console.log('disconnected');
+    console.log('Disconnected');
   }
 
   onAddTrequest(trequest) {
     const { trequests } = this.state;
     if (!this.checkDuplicatedTrequest(trequests, trequest)) {
       trequests.push(trequest);
-      // Sorting by trequest's date
+      // Sorted by trequest's date
       trequests.sort((a, b) => moment(a.date, 'MMMM Do YYYY, h:mm:ss a').valueOf() - moment(b.date, 'MMMM Do YYYY, h:mm:ss a').valueOf());
       this.setState({ trequests });
     }

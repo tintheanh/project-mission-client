@@ -36,8 +36,11 @@ export default class Subject extends Component {
     } = this.props;
     const { active } = this.state;
 
+    // This will detect every clicking out of the div, even on the submit button
+    // => Making the user's input empty, needs to detect when the user click on the submit button
     if (this.wrapperRef && !this.wrapperRef.contains(event.target) && active) {
       this.setState({ active: false }, () => {
+        // When clicking out the submit button, submit the input
         if (submitBtnRef.contains(event.target)) inputSubject(subject, group);
         else inputSubject('', '');
       });
@@ -58,8 +61,8 @@ export default class Subject extends Component {
           ref={this.setWrapperRef}
           onClick={() => {
             this.setState(prevState => ({ active: !prevState.active }));
-            if (!active) inputSubject(subject, group);
-            else inputSubject('', '');
+            if (!active) inputSubject(subject, group); // When button is selected => input in
+            else inputSubject('', ''); // Button is unselected => earase input
           }
           }
         >
