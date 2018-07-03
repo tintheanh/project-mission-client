@@ -29,7 +29,7 @@ export default class App extends Component {
 
     // Checking every 3s => reconnecting
     let counter = 0;
-    let interval = setInterval(() => {
+    const intervalID = setInterval(() => {
       if (ws.readyState === 3) {
         console.log('Connection is lost! Reconnecting...');
         ws = new WebSocket('wss://mygoapi.ngrok.io');
@@ -39,13 +39,13 @@ export default class App extends Component {
         socket.on('trequest edit', this.onCheckRequest.bind(this));
         socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
         counter++;
-        console.log(counter);
       }
       if (counter === 2) {
-        alert('Server is temporalily down! Anh Ng is running some errands! Please try again later!');
-        clearInterval(interval);
+        alert('Server is temporalily down! Please try again later!');
+        clearInterval(intervalID);
       }
-    }, 3000);
+    }, 1000);
+
 
     // Fetching subjects
     const { subjects } = this.state;
