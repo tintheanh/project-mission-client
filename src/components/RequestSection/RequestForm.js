@@ -117,7 +117,7 @@ export default class RequestForm extends Component {
     const { subjects } = this.props;
     return (
       <Container>
-        <h1 style={styles.headerTextStyle}>
+        {/* <h1 style={styles.headerTextStyle}>
           Please enter your name and subject
         </h1>
         <form style={styles.formStyle}>
@@ -191,7 +191,8 @@ export default class RequestForm extends Component {
               </ModalFooter>
             </Modal>
           </div>
-        </form>
+        </form> */}
+        <h1 style={{ color: '#fff', textAlign: 'center' }}>The system is under development! Will be released soon!</h1>
       </Container>
     );
   }
