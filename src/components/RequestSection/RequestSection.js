@@ -11,7 +11,6 @@ const RequestList = props => (
         <RequestTable
           group="MATH"
           trequests={props.trequests}
-          removeCheckedTrequest={props.removeCheckedTrequest}
         />
       </Col>
       <Col lg="4">
@@ -19,7 +18,6 @@ const RequestList = props => (
         <RequestTable
           group="STEM/CTE"
           trequests={props.trequests}
-          removeCheckedTrequest={props.removeCheckedTrequest}
         />
       </Col>
       <Col lg="4">
@@ -27,7 +25,6 @@ const RequestList = props => (
         <RequestTable
           group="LA"
           trequests={props.trequests}
-          removeCheckedTrequest={props.removeCheckedTrequest}
         />
       </Col>
     </Row>
@@ -52,7 +49,6 @@ const styles = {
 };
 
 RequestList.propTypes = {
-  removeCheckedTrequest: PropTypes.func.isRequired,
   trequests: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 

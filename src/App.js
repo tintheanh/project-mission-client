@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import fire from 'firebase';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import WebSocket from 'reconnecting-websocket';
-import moment from 'moment';
+// import moment from 'moment';
 import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
-import Socket from './socket';
 import hardcodedsubjects from './subjectData';
 
 export default class App extends Component {
@@ -17,104 +16,26 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    let ws = new WebSocket('wss://mygoapi.ngrok.io');
-    let socket = this.socket = new Socket(ws);
-
-    // Connecting to WebSocket
-    socket.on('connect', this.onConnect.bind(this));
-    socket.on('trequest add', this.onAddTrequest.bind(this));
-    socket.on('trequest edit', this.onCheckRequest.bind(this));
-    socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
-
-    // Checking every 3s => reconnecting
-    // let counter = 0;
-    setInterval(() => {
-      if (ws.readyState === ws.CLOSED || ws.readyState === ws.CLOSING) {
-        console.log('Connection is lost! Reconnecting...');
-        ws = new WebSocket('wss://mygoapi.ngrok.io');
-        socket = this.socket = new Socket(ws);
-        socket.on('connect', this.onConnect.bind(this));
-        socket.on('trequest add', this.onAddTrequest.bind(this));
-        socket.on('trequest edit', this.onCheckRequest.bind(this));
-        socket.on('trequest remove', this.onRemoveCheckedTrequest.bind(this));
-        // counter++;
-      }
-      // if (counter > 3) {
-      //   alert('Server is temporalily down! Please try again later!');
-      //   clearInterval(intervalID);
-      // }
-      // counter = 0;
-    }, 1000);
-
-    // Fetching subjects
-    const { subjects } = this.state;
-    const proxyUrl = 'https://cryptic-reaches-48126.herokuapp.com/'; // Bypassing CORS
-    const targetUrl = 'https://mygoapi.ngrok.io/get-subjects';
-    fetch(proxyUrl + targetUrl).then(response => response.json())
-      .then((data) => {
-        data.forEach((element) => {
-          subjects.push(element);
+  componentWillMount() {
+    fire.database().ref('trequests').on('value', (snapshot) => {
+      const trequestObj = snapshot.val();
+      const trequests = [];
+      if (trequestObj) {
+        Object.keys(trequestObj).forEach((e) => {
+          const trequest = {
+            byTutor: trequestObj[e].byTutor,
+            date: trequestObj[e].date,
+            group: trequestObj[e].group,
+            name: trequestObj[e].name,
+            status: trequestObj[e].status,
+            subject: trequestObj[e].subject,
+            id: e
+          };
+          trequests.push(trequest);
         });
-        subjects.sort((a, b) => (a.name > b.name) - (a.name < b.name)); // Sorted by subject's name
-      }).then(() => console.log('Fetching succeeded'))
-      .then(() => this.setState({ subjects }))
-      .catch(err => console.log(err));
-  }
-
-  onConnect() {
-    console.log('Connected');
-    this.socket.emit('trequest subscribe');
-  }
-
-  onDisconnect() {
-    console.log('Disconnected');
-  }
-
-  onAddTrequest(trequest) {
-    const { trequests } = this.state;
-    if (!this.checkDuplicatedTrequest(trequests, trequest)) {
-      trequests.push(trequest);
-      // Sorted by trequest's date
-      trequests.sort((a, b) => moment(a.date, 'MMMM Do YYYY, h:mm:ss a').valueOf() - moment(b.date, 'MMMM Do YYYY, h:mm:ss a').valueOf());
-      this.setState({ trequests });
-    }
-  }
-
-  // Filtering unchecked trequests
-  onRemoveCheckedTrequest() {
-    const { trequests } = this.state;
-    const uncheckedRequests = trequests.filter(e => !e.checked);
-    this.setState({ trequests: uncheckedRequests });
-  }
-
-  // When checking a trequest, reassign it to a checked trequest
-  onCheckRequest(req) {
-    const { trequests } = this.state;
-    for (let i = 0; i < trequests.length; i++) {
-      if (trequests[i].id === req.id) {
-        trequests[i] = Object.assign(req);
+        this.setState({ trequests }, () => console.log(this.state.trequests));
       }
-    }
-    this.setState({ trequests });
-  }
-
-  // Checking duplicated trequest b/c WS reconnecting causes duplicating trequest
-  checkDuplicatedTrequest(trequests, trequest) {
-    for (let i = 0; i < trequests.length; i++) {
-      if (trequests[i].id === trequest.id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  addTrequest(name) {
-    this.socket.emit('trequest add', name);
-  }
-
-  removeCheckedTrequest(reqID) {
-    this.socket.emit('trequest remove', reqID);
+    }).bind(this);
   }
 
   // Using hardcoded subjects when fetching fail
@@ -137,7 +58,6 @@ export default class App extends Component {
               path="/"
               render={() => (
                 <Home
-                  addTrequest={this.addTrequest.bind(this)}
                   subjects={this.renderSubjects()}
                 />
               )}
@@ -147,7 +67,6 @@ export default class App extends Component {
               render={() => (
                 <RequestSection
                   trequests={this.state.trequests}
-                  removeCheckedTrequest={this.removeCheckedTrequest.bind(this)}
                 />
               )}
             />

@@ -7,12 +7,12 @@ import 'react-table/react-table.css';
 
 export default class RequestList extends PureComponent {
   componentDidMount() {
-    const { trequests, removeCheckedTrequest } = this.props;
+    const { trequests } = this.props;
     setInterval(() => {
       trequests.forEach((e) => {
         if (e.checked) {
           e.status = 'done';
-          removeCheckedTrequest(e);
+          // removeCheckedTrequest(e);
         }
       });
       this.forceUpdate();
@@ -81,6 +81,5 @@ export default class RequestList extends PureComponent {
 
 RequestList.propTypes = {
   group: PropTypes.string.isRequired,
-  removeCheckedTrequest: PropTypes.func.isRequired,
   trequests: PropTypes.arrayOf(PropTypes.object).isRequired
 };

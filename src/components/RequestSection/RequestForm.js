@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fire from 'firebase';
 import moment from 'moment';
 import {
   Container, Row, Col, Modal, ModalBody, ModalFooter
@@ -26,8 +27,8 @@ export default class RequestForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const { addTrequest } = this.props;
     if (this.state.tinput !== '') {
+      const trequestsRef = fire.database().ref('trequests');
       const data = {
         name: this.state.ninput,
         subject: this.state.tinput,
@@ -36,7 +37,7 @@ export default class RequestForm extends Component {
         group: this.state.ginput,
         date: moment().format('MMMM Do YYYY, h:mm:ss a')
       };
-      addTrequest(data); // Sending data to the server
+      trequestsRef.push(data);
       this.ninputRef.value = '';
       alert('Your request has been submitted! Please wait for a few minutes!');
       this.toggle();
@@ -117,7 +118,7 @@ export default class RequestForm extends Component {
     const { subjects } = this.props;
     return (
       <Container>
-        {/* <h1 style={styles.headerTextStyle}>
+        <h1 style={styles.headerTextStyle}>
           Please enter your name and subject
         </h1>
         <form style={styles.formStyle}>
@@ -191,8 +192,7 @@ export default class RequestForm extends Component {
               </ModalFooter>
             </Modal>
           </div>
-        </form> */}
-        <h1 style={{ color: '#fff', textAlign: 'center' }}>The system is under development! Will be released soon!</h1>
+        </form>
       </Container>
     );
   }
@@ -254,6 +254,5 @@ const styles = {
 };
 
 RequestForm.propTypes = {
-  addTrequest: PropTypes.func.isRequired,
   subjects: PropTypes.arrayOf(PropTypes.object).isRequired
 };

@@ -7,14 +7,12 @@ const Home = props => (
   <div>
     <Header />
     <RequestForm
-      addTrequest={props.addTrequest}
       subjects={props.subjects}
     />
   </div>
 );
 
 Home.propTypes = {
-  addTrequest: PropTypes.func.isRequired,
   subjects: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
