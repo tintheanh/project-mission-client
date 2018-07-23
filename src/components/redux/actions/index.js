@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER, SET_LOGIN, SET_LOGOUT } from './types';
+import { LOGIN_USER, LOGOUT_USER, SET_LOGGED_IN } from './types';
 
 import firebase from 'firebase';
 
@@ -20,14 +20,9 @@ export const loginUser = (email, password) => {
 export const logoutUser = () => ({
     type: LOGOUT_USER,
     payload: null
-})
-
-export const setLogin = () =>  ({
-    type: SET_LOGIN,
-    payload: true
 });
 
-export const setLogout = () => ({
-    type: SET_LOGOUT,
-    payload: false
-})
+export const setLoggedIn = loggedIn => ({
+    type: SET_LOGGED_IN,
+    payload: loggedIn
+});

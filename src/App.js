@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fire from 'firebase';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import ReduxThunk from 'redux-thunk';
 
@@ -12,28 +12,17 @@ import RequestSection from './components/RequestSection/RequestSection';
 import hardcodedsubjects from './subjectData';
 
 import reducers from './components/redux/reducers';
-import { } from './components/redux/actions';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       trequests: [],
       subjects: []
     };
-
-    this.destroyAuthListener = null;
   }
 
   componentDidMount() {
-    this.destroyAuthListener = fire.auth().onAuthStateChanged(user => {
-      if (user) {
-
-      }
-      else {
-
-      }
-    });
     fire.database().ref('trequests').on('value', (snapshot) => {
       const trequestObj = snapshot.val();
       const trequests = [];
@@ -99,5 +88,3 @@ class App extends Component {
     this.destroyAuthListener();
   }
 }
-
-export default connect(null,{})(App);

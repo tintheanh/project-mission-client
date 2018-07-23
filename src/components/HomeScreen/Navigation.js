@@ -3,25 +3,51 @@ import {
   Navbar,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Modal, ModalHeader, ModalBody, ModalFooter,
+  Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { loginUser, logoutUser } from '../redux/actions';
+import { loginUser, logoutUser, setLoggedIn } from '../redux/actions';
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
+      user: null,
+      modal: false,
+      email: '',
+      password: ''
     };
+
+    this.unsubscribeAuthListener = null;
+  }
+
+  componentDidMount() {
+    this.unsubscribeAuthListener = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.setLoggedIn(true);
+      }
+      else {
+        this.props.setLoggedIn(false);
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeAuthListener();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.loggedIn !== prevState.loggedIn)
-      return nextProps.loggedIn;
+    if (nextProps.user !== prevState.user)
+      return { user: nextProps.user };
     return prevState;
+  }
+
+  toggle() {
+    this.setState({ modal: !this.state.modal });
   }
 
   render() {
@@ -34,14 +60,28 @@ class Navigation extends Component {
           <NavItem>
             <NavLink tag="span"><Link to="/request">Request</Link></NavLink>
           </NavItem>
-          { this.state.loggedIn ?           
+          { this.state.user ?           
             <NavItem onClick={()=>this.props.logoutUser()}>
-              <NavLink tag="span">Logout</NavLink>
+              <NavLink tag="span"><Link to ="#"> Logout </Link></NavLink>
             </NavItem>:
-            <NavItem>
-              <NavLink tag="span">Login</NavLink>
+            <NavItem onClick={()=>this.setState({ modal: true })}>
+              <NavLink tag="span"><Link to="#"> Login </Link></NavLink>
             </NavItem> }
         </Nav>
+          <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)}>
+            <ModalHeader toggle={this.toggle.bind(this)}>Login</ModalHeader>
+            <ModalBody>
+              <form>
+                <label>Email</label>
+                <input className='form-control input-sm' type='text' placeholder='username@gmail.com' onChange={e => this.setState({email: e.target.value})} value={this.state.email}/>
+                <label>Password</label>
+                <input className='form-control' type='password' onChange={e => this.setState({password: e.target.value})} value={this.state.password}/>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={() => this.props.loginUser(this.state.email, this.state.password)}>Login</Button>
+            </ModalFooter>
+          </Modal>
       </Navbar>
     );
   }
@@ -55,8 +95,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  const { loggedIn, ...rest } = state;
-  return { loggedIn, rest };
+  return { user: state.auth.user };
 }
 
 export default connect(mapStateToProps, {loginUser, logoutUser})(Navigation);
