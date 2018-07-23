@@ -4,8 +4,25 @@ import FaCheck from 'react-icons/lib/fa/check';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import 'react-table/react-table.css';
+import { connect } from 'tls';
 
-export default class RequestList extends PureComponent {
+class RequestList extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user !== prevState.user)
+      return ({ 
+        ...prevState,
+        user: nextProps.user 
+      });
+    return prevState;
+  }
+  
   componentDidMount() {
     const { trequests } = this.props;
     setInterval(() => {
@@ -84,3 +101,11 @@ RequestList.propTypes = {
   group: PropTypes.string.isRequired,
   trequests: PropTypes.arrayOf(PropTypes.object).isRequired
 };
+
+const mapStateToProps = state => {
+  return({
+    user: state.auth.user
+  });
+}
+
+export default connect(mapStateToProps)(RequestList);

@@ -27,12 +27,10 @@ class Navigation extends Component {
 
   componentDidMount() {
     this.unsubscribeAuthListener = firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+      if (user) 
         this.props.setLoggedIn(true);
-      }
-      else {
+      else
         this.props.setLoggedIn(false);
-      }
     })
   }
 
@@ -43,6 +41,7 @@ class Navigation extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user !== prevState.user)
       return ({ 
+        ...prevState,
         user: nextProps.user,
         loggedIn: nextProps.loggedIn
       });
