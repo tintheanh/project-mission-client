@@ -121,7 +121,7 @@ export default class RequestForm extends Component {
         <h1 style={styles.headerTextStyle}>
           Please enter your name and subject
         </h1>
-        <form style={styles.formStyle}>
+        <form style={styles.formStyle} onSubmit={e => e.preventDefault()}>
           <div className="form-group">
             <Row>
               <Col lg="4">

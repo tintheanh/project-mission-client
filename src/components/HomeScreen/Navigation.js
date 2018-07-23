@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Navbar,Nav,NavItem, NavLink,
   Modal, ModalHeader, ModalBody, ModalFooter,
+  Form, FormGroup, Label, Input,
   Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -64,21 +65,25 @@ class Navigation extends Component {
           </NavItem>
           { this.state.user ?           
             <NavItem onClick={()=>this.props.logoutUser()}>
-              <NavLink tag="span"><Link to ="#"> Logout </Link></NavLink>
+              <NavLink tag="span"><Link to ="#">Logout</Link></NavLink>
             </NavItem>:
             <NavItem onClick={()=>this.setState({ modal: true })}>
-              <NavLink tag="span"><Link to="#"> Tutor Login </Link></NavLink>
+              <NavLink tag="span"><Link to="#">Login</Link></NavLink>
             </NavItem> }
         </Nav>
           <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)}>
             <ModalHeader toggle={this.toggle.bind(this)}>Tutor Login</ModalHeader>
             <ModalBody>
-              <form>
-                <label>Email</label>
-                <input className='form-control input-sm' type='text' placeholder='username@gmail.com' onChange={e => this.setState({email: e.target.value})} value={this.state.email}/>
-                <label>Password</label>
-                <input className='form-control' type='password' onChange={e => this.setState({password: e.target.value})} value={this.state.password}/>
-              </form>
+              <Form>
+                <FormGroup>
+                  <Label>Email</Label>
+                  <Input type='email' placeholder='username@gmail.com' onChange={e => this.setState({email: e.target.value})} value={this.state.email}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label>Password</Label>
+                  <Input type='password' onChange={e => this.setState({password: e.target.value})} value={this.state.password}/>
+                </FormGroup>
+              </Form>
             </ModalBody>
             <ModalFooter>
               <Button color="primary" 

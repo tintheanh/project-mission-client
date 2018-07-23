@@ -50,6 +50,7 @@ export default class RequestList extends PureComponent {
   render() {
     const { trequests, group } = this.props;
     const trequestsFinal = this.getRequests(trequests, group);
+    
     return (
       <div className="request-table">
         <ReactTable
