@@ -4,7 +4,7 @@ import FaCheck from 'react-icons/lib/fa/check';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import 'react-table/react-table.css';
-import { connect } from 'tls';
+import { connect } from 'react-redux';
 
 class RequestList extends PureComponent {
   constructor(props) {
@@ -22,7 +22,7 @@ class RequestList extends PureComponent {
       });
     return prevState;
   }
-  
+
   componentDidMount() {
     const { trequests } = this.props;
     setInterval(() => {
