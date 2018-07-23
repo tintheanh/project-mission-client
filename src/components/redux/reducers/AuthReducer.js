@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from '../actions/types';
+import { LOGIN_USER, LOGOUT_USER, SET_LOGGED_IN} from '../actions/types';
 
 const initialState = {
     user: null,
@@ -10,12 +10,14 @@ export const AuthReducer = (state = initialState, action) => {
         case LOGIN_USER:
             return { 
                 ...state,
-                user: action.payload
+                user: action.payload,
+                loggedIn: true
             };
         case LOGOUT_USER:
             return { 
                 ...state,
-                user: action.payload
+                user: action.payload,
+                loggedIn: false
             };
         case SET_LOGGED_IN:
             return {

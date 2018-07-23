@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Navbar,
-  Nav,
-  NavItem,
-  NavLink,
+  Navbar,Nav,NavItem, NavLink,
   Modal, ModalHeader, ModalBody, ModalFooter,
   Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 
 import { loginUser, logoutUser, setLoggedIn } from '../redux/actions';
 
@@ -19,7 +17,8 @@ class Navigation extends Component {
       user: null,
       modal: false,
       email: '',
-      password: ''
+      password: '',
+      loggedIn: false
     };
 
     this.unsubscribeAuthListener = null;
@@ -42,7 +41,10 @@ class Navigation extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user !== prevState.user)
-      return { user: nextProps.user };
+      return ({ 
+        user: nextProps.user,
+        loggedIn: nextProps.loggedIn
+      });
     return prevState;
   }
 
@@ -65,11 +67,11 @@ class Navigation extends Component {
               <NavLink tag="span"><Link to ="#"> Logout </Link></NavLink>
             </NavItem>:
             <NavItem onClick={()=>this.setState({ modal: true })}>
-              <NavLink tag="span"><Link to="#"> Login </Link></NavLink>
+              <NavLink tag="span"><Link to="#"> Tutor Login </Link></NavLink>
             </NavItem> }
         </Nav>
           <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)}>
-            <ModalHeader toggle={this.toggle.bind(this)}>Login</ModalHeader>
+            <ModalHeader toggle={this.toggle.bind(this)}>Tutor Login</ModalHeader>
             <ModalBody>
               <form>
                 <label>Email</label>
@@ -79,7 +81,14 @@ class Navigation extends Component {
               </form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={() => this.props.loginUser(this.state.email, this.state.password)}>Login</Button>
+              <Button color="primary" 
+                onClick={() => {
+                  this.props.loginUser(this.state.email, this.state.password);
+                  this.toggle();
+                }}
+              >
+                Login
+              </Button>
             </ModalFooter>
           </Modal>
       </Navbar>
@@ -98,4 +107,4 @@ const mapStateToProps = state => {
   return { user: state.auth.user };
 }
 
-export default connect(mapStateToProps, {loginUser, logoutUser})(Navigation);
+export default connect(mapStateToProps, {loginUser, logoutUser, setLoggedIn})(Navigation);

@@ -17,10 +17,20 @@ export const loginUser = (email, password) => {
     };
 }
 
-export const logoutUser = () => ({
-    type: LOGOUT_USER,
-    payload: null
-});
+export const logoutUser = () => {
+    return dispatch => {
+        firebase.auth().signOut()
+            .then(() => {
+                dispatch({
+                    type: LOGOUT_USER,
+                    payload: null
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+};
 
 export const setLoggedIn = loggedIn => ({
     type: SET_LOGGED_IN,
