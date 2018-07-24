@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 
-import { loginUser, logoutUser, setLoggedIn } from '../redux/actions';
+import { loginUser, logoutUser } from '../redux/actions';
 
 class Navigation extends Component {
   constructor(props) {
@@ -18,8 +18,7 @@ class Navigation extends Component {
       user: null,
       modal: false,
       email: '',
-      password: '',
-      loggedIn: false
+      password: ''
     };
 
     this.unsubscribeAuthListener = null;
@@ -28,9 +27,9 @@ class Navigation extends Component {
   componentDidMount() {
     this.unsubscribeAuthListener = firebase.auth().onAuthStateChanged(user => {
       if (user) 
-        this.props.setLoggedIn(true);
+        this.props.loginUser(user);
       else
-        this.props.setLoggedIn(false);
+        this.props.logoutUser();
     })
   }
 
@@ -41,9 +40,7 @@ class Navigation extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user !== prevState.user)
       return ({ 
-        ...prevState,
-        user: nextProps.user,
-        loggedIn: nextProps.loggedIn
+        user: nextProps.user
       });
     return prevState;
   }
@@ -87,8 +84,24 @@ class Navigation extends Component {
             <ModalFooter>
               <Button color="primary" 
                 onClick={() => {
-                  this.props.loginUser(this.state.email, this.state.password);
-                  this.toggle();
+                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                    .then(() => {
+                      firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+                        .then(user => {
+                          this.props.loginUser(user);
+                          this.setState({
+                            email: '',
+                            password: ''
+                          });
+                          this.toggle();
+                        })
+                        .catch(err => {
+                          alert(err);
+                        });
+                    })
+                    .catch(err => {
+                      alert(err);
+                    });
                 }}
               >
                 Login
@@ -111,4 +124,4 @@ const mapStateToProps = state => {
   return { user: state.auth.user };
 }
 
-export default connect(mapStateToProps, {loginUser, logoutUser, setLoggedIn})(Navigation);
+export default connect(mapStateToProps, {loginUser, logoutUser})(Navigation);

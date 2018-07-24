@@ -1,21 +1,6 @@
-import { LOGIN_USER, LOGOUT_USER, SET_LOGGED_IN } from './types';
+import { LOGIN_USER, LOGOUT_USER } from './types';
 
 import firebase from 'firebase';
-
-export const loginUser = (email, password) => {
-    return dispatch => {
-        firebase.auth().signInWithEmailAndPassword(email,password)
-            .then(user => {
-                dispatch({
-                    type: LOGIN_USER,
-                    payload: user
-                });
-            })
-            .catch (err => {
-                console.log(err);
-            });
-    };
-}
 
 export const logoutUser = () => {
     return dispatch => {
@@ -32,7 +17,9 @@ export const logoutUser = () => {
     }
 };
 
-export const setLoggedIn = loggedIn => ({
-    type: SET_LOGGED_IN,
-    payload: loggedIn
-});
+export const loginUser = user => {
+    return ({
+        type: LOGIN_USER,
+        payload: user
+    });
+}
