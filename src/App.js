@@ -1,48 +1,40 @@
 import React, { Component } from 'react';
-import fire from 'firebase';
+import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import moment from 'moment';
 import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
-import hardcodedsubjects from './subjectData';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trequests: [],
       subjects: []
     };
   }
 
-  componentWillMount() {
-    fire.database().ref('trequests').on('value', (snapshot) => {
-      const trequestObj = snapshot.val();
-      const trequests = [];
-      if (trequestObj) {
-        Object.keys(trequestObj).forEach((e) => {
-          const trequest = {
-            byTutor: trequestObj[e].byTutor,
-            date: trequestObj[e].date,
-            group: trequestObj[e].group,
-            name: trequestObj[e].name,
-            status: trequestObj[e].status,
-            subject: trequestObj[e].subject,
+  componentDidMount() {
+    firebase.database().ref('subjects').on('value', (snapshot) => {
+      const subjectObj = snapshot.val();
+      const subjects = [];
+      if (subjectObj) {
+        Object.keys(subjectObj).forEach((e) => {
+          const subject = {
+            group: subjectObj[e].group,
+            name: subjectObj[e].name,
             id: e
           };
-          trequests.push(trequest);
+          subjects.push(subject);
         });
-        this.setState({ trequests }, () => console.log(this.state.trequests));
+        this.setState({ subjects });
       }
     }).bind(this);
   }
 
-  // Using hardcoded subjects when fetching fail
   renderSubjects() {
     const { subjects } = this.state;
-    if (subjects.length === 0) {
-      return hardcodedsubjects.sort((a, b) => (a.name > b.name) - (a.name < b.name));
+    if (subjects.length !== 0) {
+      return subjects.sort((a, b) => (a.name > b.name) - (a.name < b.name));
     }
     return subjects;
   }
@@ -65,9 +57,7 @@ export default class App extends Component {
             <Route
               path="/request"
               render={() => (
-                <RequestSection
-                  trequests={this.state.trequests}
-                />
+                <RequestSection />
               )}
             />
           </Switch>

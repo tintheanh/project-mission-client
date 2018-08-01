@@ -43,9 +43,10 @@
   font-style: italic;
 }
 
-html, body {
-  max-width: 100%!important;
-  overflow-x: hidden!important;
+html,
+body {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 body {
@@ -85,6 +86,11 @@ body {
 }
 
 .navbar .navbar-nav .nav-item:nth-child(2) .nav-link a {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.navbar .navbar-nav .nav-item:nth-child(3) .nav-link a {
   padding-left: 32px;
   padding-right: 32px;
 }
@@ -396,11 +402,11 @@ button {
 
   .request-title {
     font-size: 6.2vw !important;
-    margin: 0 0 3.2vh 0!important;
+    margin: 0 0 3.2vh 0 !important;
   }
 
   .request-header .row .col-lg-4:first-child .request-title {
-    margin-top: 12vh!important; 
+    margin-top: 12vh !important;
   }
 
   .ReactTable .rt-noData {

@@ -7,12 +7,12 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const config = {
-  apiKey: 'AIzaSyAq9FSKG22cFXNVLMBRbuWJQwKJClVEr3A',
-  authDomain: 'asc-project-c3066.firebaseapp.com',
-  databaseURL: 'https://asc-project-c3066.firebaseio.com',
-  projectId: 'asc-project-c3066',
-  storageBucket: 'asc-project-c3066.appspot.com',
-  messagingSenderId: '693514416458'
+  apiKey: 'AIzaSyCMmhOot8et7cJv9xVF6XG4fzF0y9BqpRM',
+  authDomain: 'mission-asc.firebaseapp.com',
+  databaseURL: 'https://mission-asc.firebaseio.com',
+  projectId: 'mission-asc',
+  storageBucket: 'mission-asc.appspot.com',
+  messagingSenderId: '1005590867382'
 };
 firebase.initializeApp(config);
 

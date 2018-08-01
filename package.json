@@ -10,11 +10,11 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-icons": "^2.2.7",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-table": "^6.8.6",
-    "reactstrap": "^6.1.0",
-    "reconnecting-websocket": "^4.0.0-rc5"
+    "reactstrap": "^6.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

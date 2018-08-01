@@ -35,7 +35,8 @@ export default class RequestForm extends Component {
         checked: false,
         byTutor: '',
         group: this.state.ginput,
-        date: moment().format('MMMM Do YYYY, h:mm:ss a')
+        date: moment().format('MMMM Do YYYY, h:mm:ss a'),
+        dateChecked: ''
       };
       trequestsRef.push(data);
       this.ninputRef.value = '';
@@ -121,7 +122,7 @@ export default class RequestForm extends Component {
         <h1 style={styles.headerTextStyle}>
           Please enter your name and subject
         </h1>
-        <form style={styles.formStyle}>
+        <form style={styles.formStyle} onSubmit={e => e.preventDefault()}>
           <div className="form-group">
             <Row>
               <Col lg="4">

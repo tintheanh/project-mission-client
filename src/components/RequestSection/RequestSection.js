@@ -1,31 +1,21 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
-import PropTypes from 'prop-types';
 import RequestTable from './RequestTable';
 
-const RequestList = props => (
+const RequestSection = () => (
   <div className="request-header" style={styles.container}>
     <Row>
       <Col lg="4">
         <h1 style={styles.headerTextStyle} className="request-title">Mathematics</h1>
-        <RequestTable
-          group="MATH"
-          trequests={props.trequests}
-        />
+        <RequestTable group="MATH" />
       </Col>
       <Col lg="4">
         <h1 style={styles.headerTextStyle} className="request-title">STEM/CTE</h1>
-        <RequestTable
-          group="STEM/CTE"
-          trequests={props.trequests}
-        />
+        <RequestTable group="STEM/CTE" />
       </Col>
       <Col lg="4">
         <h1 style={styles.headerTextStyle} className="request-title">Language Arts</h1>
-        <RequestTable
-          group="LA"
-          trequests={props.trequests}
-        />
+        <RequestTable group="LA" />
       </Col>
     </Row>
 
@@ -48,8 +38,4 @@ const styles = {
   }
 };
 
-RequestList.propTypes = {
-  trequests: PropTypes.arrayOf(PropTypes.object).isRequired
-};
-
-export default RequestList;
+export default RequestSection;
