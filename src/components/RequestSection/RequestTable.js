@@ -6,7 +6,7 @@ import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import 'react-table/react-table.css';
 
-class RequestList extends Component {
+class RequestTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -183,8 +183,8 @@ class RequestList extends Component {
   }
 }
 
-RequestList.propTypes = {
+RequestTable.propTypes = {
   group: PropTypes.string.isRequired
 };
 
-export default RequestList;
+export default RequestTable;
