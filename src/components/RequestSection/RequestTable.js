@@ -69,7 +69,7 @@ class RequestTable extends Component {
       this.state.trequests.forEach((e) => {
         const diff = Math.abs(new Date() - moment(e.dateChecked, 'MMMM Do YYYY, h:mm:ss a'));
         const min = Math.floor((diff / 1000) / 60);
-        if (e.checked && min === 4) {
+        if (e.checked && min >= 4) {
           this.removeCheckedTrequest(e);
           this.setState(prevState => ({
             trequests: prevState.trequests.filter(trequest => trequest.checked === false)

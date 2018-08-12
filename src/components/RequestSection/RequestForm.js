@@ -40,11 +40,11 @@ export default class RequestForm extends Component {
       };
       trequestsRef.push(data);
       this.ninputRef.value = '';
-      alert('Your request has been submitted! Please wait for a few minutes!');
+      alert('Your request has been submitted! Please wait for the next available tutor!');
       this.toggle();
       this.setState({ ninput: '' });
     } else {
-      alert('Please select one subject!');
+      alert('Please select one course!');
     }
   }
 
@@ -120,7 +120,7 @@ export default class RequestForm extends Component {
     return (
       <Container>
         <h1 style={styles.headerTextStyle}>
-          Please enter your name and subject
+          Please enter your first name and select the tutoring course
         </h1>
         <form style={styles.formStyle} onSubmit={e => e.preventDefault()}>
           <div className="form-group">
@@ -141,7 +141,7 @@ export default class RequestForm extends Component {
             </Row>
             <Row>
               <Col lg="12" style={{ textAlign: 'center' }}>
-                <button type="button" style={styles.subjectSelectBtn} onClick={this.toggle}>Choose a subject</button>
+                <button type="button" style={styles.subjectSelectBtn} onClick={this.toggle}>Select a course</button>
               </Col>
             </Row>
             <Modal isOpen={this.state.modal} toggle={this.toggle} backdrop="static" style={{ maxWidth: '73vw' }}>
@@ -201,7 +201,7 @@ export default class RequestForm extends Component {
 
 const styles = {
   headerTextStyle: {
-    fontSize: '2.5vw',
+    fontSize: '2.3vw',
     color: '#fff',
     textAlign: 'center',
     margin: '2vh 6vw 0 6vw'

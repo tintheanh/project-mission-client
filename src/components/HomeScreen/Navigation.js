@@ -14,8 +14,7 @@ class Navigation extends Component {
     this.state = {
       auth: false,
       modal: false,
-      email: '',
-      password: ''
+      email: ''
     };
   }
 
@@ -36,11 +35,10 @@ class Navigation extends Component {
   }
 
   handleSubmit() {
-    firebase.auth().signInWithEmailAndPassword(`${this.state.email}@asc.com`, this.state.password)
+    firebase.auth().signInWithEmailAndPassword(`${this.state.email}@asc.com`, '123456')
       .then(() => {
         this.setState({
-          email: '',
-          password: ''
+          email: ''
         });
         this.toggle();
         alert('Login successfully.');
@@ -79,10 +77,6 @@ class Navigation extends Component {
               <FormGroup>
                 <Label>Tutor ID</Label>
                 <Input type="email" onChange={e => this.setState({ email: e.target.value })} value={this.state.email} />
-              </FormGroup>
-              <FormGroup>
-                <Label>Password</Label>
-                <Input type="password" onChange={e => this.setState({ password: e.target.value })} value={this.state.password} />
               </FormGroup>
             </Form>
           </ModalBody>
