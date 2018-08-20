@@ -274,7 +274,7 @@ button {
   }
 
   .ReactTable .rt-tbody {
-    font-size: 1.7vw;
+    font-size: 1.5vw;
   }
 
   .ReactTable .rt-thead {
@@ -372,7 +372,6 @@ button {
   }
 
   .form-group button {
-    /* width: auto !important; */
     font-size: 5.6vw !important;
     margin-top: 5.8vh !important;
   }
@@ -418,5 +417,32 @@ button {
 
   .ReactTable .rt-noData {
     font-size: 3.8vw;
+  }
+
+  @media only screen and (max-width: 384px) {
+    .request-table .ReactTable {
+      margin-bottom: 4vh;
+    }
+
+    .request-header .row .col-lg-4:first-child .request-title {
+      margin-top: 10vh !important;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link a {
+      font-size: 14px;
+    }
+    footer {
+      font-size: 12px;
+    }
+  }
+
+  @media only screen and (max-width: 331px) {
+    .request-header .row .col-lg-4:first-child .request-title {
+      margin-top: 14vh !important;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link a {
+      font-size: 12px;
+    }
   }
 }

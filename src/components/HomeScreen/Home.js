@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import Header from './Header';
 import RequestForm from '../RequestSection/RequestForm';
 
@@ -10,7 +9,7 @@ const Home = props => (
     <RequestForm
       subjects={props.subjects}
     />
-    <footer style={styles.footerStyle}>{`© ${moment().year()} Anh Nguyen ・ Nguyen Dinh ・ Nhat Trinh`}</footer>
+    <footer style={styles.footerStyle}>{`© ${(new Date()).getFullYear()} Anh Nguyen ・ Nguyen Dinh ・ Nhat Trinh`}</footer>
   </div>
 );
 
