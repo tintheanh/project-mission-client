@@ -66,16 +66,6 @@ class RequestTable extends Component {
 
     // Update every 1 min
     this.interval = setInterval(() => {
-      this.state.trequests.forEach((e) => {
-        const diff = Math.abs(new Date() - moment(e.dateChecked, 'MMMM Do YYYY, h:mm:ss a'));
-        const min = Math.floor((diff / 1000) / 60);
-        if (e.checked && min >= 4) {
-          this.removeCheckedTrequest(e);
-          this.setState(prevState => ({
-            trequests: prevState.trequests.filter(trequest => trequest.checked === false)
-          }));
-        }
-      });
       this.forceUpdate();
     }, 60000);
   }
@@ -142,13 +132,6 @@ class RequestTable extends Component {
     } else {
       alert('You cannot checkmark this request. It might be done by another tutor or does not belong to your tutoring group.');
     }
-  }
-
-  removeCheckedTrequest(trequest) {
-    firebase
-      .database()
-      .ref(`trequests/${trequest.id}`)
-      .remove();
   }
 
   render() {
