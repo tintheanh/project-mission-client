@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import FaCheck from 'react-icons/lib/fa/check';
+import { FaCheck } from 'react-icons/fa';
+import { IoIosClose } from 'react-icons/io';
 import moment from 'moment';
 import firebase from 'firebase';
 import PropTypes from 'prop-types';
@@ -86,24 +87,81 @@ class RequestTable extends Component {
     if (min < 30) {
       if (min < 1) {
         return this.state.auth
-          ? <p style={{ margin: '0', textDecoration: 'underline', cursor: 'pointer' }} onClick={this.checkedBy.bind(this, trequest)}>Just now</p>
+          ? (
+            <span>
+              <p
+                style={{
+                  margin: '0', textDecoration: 'underline', cursor: 'pointer', paddingRight: '15%'
+                }}
+                onClick={this.checkedBy.bind(this, trequest)}
+              >Just now
+              </p>
+              <IoIosClose
+                onClick={this.removeTrequest.bind(this, trequest)}
+                style={{
+                  position: 'absolute', top: '30%', right: '-7px', cursor: 'pointer'
+                }}
+              />
+            </span>
+          )
           : <p style={{ margin: '0' }}>Just now</p>;
       }
       return this.state.auth
-        ? <p style={{ margin: '0', textDecoration: 'underline', cursor: 'pointer' }} onClick={this.checkedBy.bind(this, trequest)}>{`${min} min ago`}</p>
+        ? (
+          <span>
+            <p
+              style={{
+                margin: '0', textDecoration: 'underline', cursor: 'pointer', paddingRight: '15%'
+              }}
+              onClick={this.checkedBy.bind(this, trequest)}
+            >{`${min} min ago`}
+            </p>
+            <IoIosClose
+              onClick={this.removeTrequest.bind(this, trequest)}
+              style={{
+                position: 'absolute', top: '30%', right: '-7px', cursor: 'pointer'
+              }}
+            />
+          </span>
+        )
         : <p style={{ margin: '0' }}>{`${min} min ago`}</p>;
     }
+
     return this.state.auth
       ? (
-        <p
-          style={{
-            margin: '0', fontWeight: 'bold', textDecoration: 'underline', cursor: 'pointer', color: '#D46A6A'
-          }}
-          onClick={this.checkedBy.bind(this, trequest)}
-        > > 30 min ago
-        </p>
+        <span>
+          <p
+            style={{
+              margin: '0', fontWeight: 'bold', textDecoration: 'underline', cursor: 'pointer', color: '#D46A6A', paddingRight: '15%'
+            }}
+            onClick={this.checkedBy.bind(this, trequest)}
+          > > 30 min ago
+          </p>
+          <IoIosClose
+            onClick={this.removeTrequest.bind(this, trequest)}
+            style={{
+              position: 'absolute', top: '30%', right: '-7px', cursor: 'pointer'
+            }}
+          />
+        </span>
       )
       : <p style={{ margin: '0', fontWeight: 'bold', color: '#D46A6A' }}> > 30 min ago</p>;
+  }
+
+  removeTrequest(trequest) {
+    // eslint-disable-next-line
+    const conf = confirm('Are you sure you want to delete this request?');
+    if (conf) {
+      firebase.database().ref(`trequests/${trequest.id}`).remove()
+        .then(() => {
+          console.log('Remove succeeded');
+        })
+        .catch((error) => {
+          console.log(`Remove failed: ${error.message}`);
+        });
+    } else {
+      console.log('Remove canceled');
+    }
   }
 
   filterRequests(trequests, group) {
@@ -151,7 +209,7 @@ class RequestTable extends Component {
               accessor: 'name'
             },
             {
-              Header: 'Subject',
+              Header: 'Course',
               accessor: 'subject'
             },
             {

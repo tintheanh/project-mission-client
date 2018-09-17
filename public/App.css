@@ -48,6 +48,8 @@ body {
   height: 100%;
   max-width: 100% !important;
   overflow-x: hidden !important;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -141,6 +143,10 @@ button {
   overflow: visible !important;
 }
 
+.ReactTable .rt-tbody .rt-tr .rt-td:nth-child(3) {
+  position: relative;
+}
+
 .ReactTable .rt-thead .rt-tr .rt-th:first-child {
   width: auto !important;
   max-width: 30% !important;
@@ -206,7 +212,7 @@ button {
 #root,
 #root > div,
 #root > div > div {
-  height: 100%!important;
+  height: 100% !important;
 }
 
 /* End styling table */

@@ -39,6 +39,8 @@ export default class RequestForm extends Component {
         dateChecked: ''
       };
       trequestsRef.push(data);
+      const sound = document.getElementById('audio');
+      sound.play();
       this.ninputRef.value = '';
       alert('Your request has been submitted! Please wait for the next available tutor!');
       this.toggle();
@@ -153,7 +155,7 @@ export default class RequestForm extends Component {
                   <Col lg="4">
                     <h1 style={{ fontSize: '2vw' }}>Mathematics</h1>
                     <Row>
-                      <Col lg="12" style={{ height: '50vh', overflowY: 'scroll' }}>
+                      <Col lg="12" style={{ height: '60vh', overflowY: 'scroll' }}>
                         {this.renderAllSubjects(this.returnSubjectGroup(subjects, 'MATH'))}
                       </Col>
                     </Row>
@@ -161,7 +163,7 @@ export default class RequestForm extends Component {
                   <Col lg="4">
                     <h1 style={{ fontSize: '2vw' }}>STEM/CTE</h1>
                     <Row>
-                      <Col lg="12" style={{ height: '50vh', overflowY: 'scroll' }}>
+                      <Col lg="12" style={{ height: '60vh', overflowY: 'scroll' }}>
                         {this.renderAllSubjects(this.returnSubjectGroup(subjects, 'STEM/CTE'))}
                       </Col>
                     </Row>
@@ -169,7 +171,7 @@ export default class RequestForm extends Component {
                   <Col lg="4">
                     <h1 style={{ fontSize: '2vw' }}>Language Arts</h1>
                     <Row>
-                      <Col lg="12" style={{ height: '50vh', overflowY: 'scroll' }}>
+                      <Col lg="12" style={{ height: '60vh', overflowY: 'scroll' }}>
                         {this.renderAllSubjects(this.returnSubjectGroup(subjects, 'LA'))}
                       </Col>
                     </Row>

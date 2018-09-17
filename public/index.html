@@ -12,6 +12,16 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link rel="stylesheet" href="App.css">
+  <!-- Firebase App is always required and must be first -->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+
+  <!-- Add additional services that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -29,6 +39,7 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root"></div>
+  <audio id="audio" src="sound.mp3" autostart="false" ></audio>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

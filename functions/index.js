@@ -8,8 +8,9 @@ exports.removeCheckedTRequest = functions.database.ref('/trequests/{trequestId}'
       const ref = admin.database().ref('trequests');
       return ref.orderByChild("checked").equalTo(true).once('value', (snapshot) => {
         const updates = {};
-        console.log(snapshot.val());
+        // console.log(snapshot.val());
         snapshot.forEach(child => {
+          // console.log(child);
           updates[child.key] = null;
         });
         return ref.update(updates);

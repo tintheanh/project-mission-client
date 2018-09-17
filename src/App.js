@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { db } from './index';
 import Home from './components/HomeScreen/Home';
 import Navigation from './components/HomeScreen/Navigation';
 import RequestSection from './components/RequestSection/RequestSection';
@@ -14,6 +15,12 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    // db.collection('trequest').get().then((snapshot) => {
+    //   console.log('Document data:', snapshot.docs);
+    //   snapshot.docs.forEach(doc => console.log(doc.data()));
+    // }).catch((error) => {
+    //   console.log('Error getting document:', error);
+    // });
     firebase.database().ref('subjects').on('value', (snapshot) => {
       const subjectObj = snapshot.val();
       const subjects = [];
