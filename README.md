@@ -5,3 +5,10 @@ This is the drop-in project which is currently being used at Mission College Aca
 ## Features
 - Realtime update from student and tutor
 - Cloud function helps to wipe out unresolved request
+
+## How to run
+```
+git clone https://github.com/tintheanh/project-mission-client.git
+cd project-mission-client
+npm run
+```
