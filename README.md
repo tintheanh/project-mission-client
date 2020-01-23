@@ -10,5 +10,5 @@ This is the drop-in project which is currently being used at Mission College Aca
 ```
 git clone https://github.com/tintheanh/project-mission-client.git
 cd project-mission-client
-npm run
+npm install && npm start
 ```
